@@ -1,5 +1,7 @@
 package com.w77996.top.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,7 +26,9 @@ public class WeiboHotEntity {
 
     private String hot;
 
+    @JsonIgnore
     private String urlMd5;
 
-    private Date createTime = new Date();
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private String createTime;
 }

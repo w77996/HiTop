@@ -9,6 +9,5 @@ import org.springframework.stereotype.Repository;
  * @description
  * @date 2020/1/15 16:29
  */
-@Repository
 public interface WeiboHotMongoRepository extends ReactiveMongoRepository<WeiboHotEntity, Long> {
 }
