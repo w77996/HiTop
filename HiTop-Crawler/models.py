@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 import time
 import hashlib
-import re
 
 
 def insert_mongo(collections, data):
@@ -22,8 +21,6 @@ class DataModels:
 
     # 持久化微博热搜
     def save_weibo(self, title, url, hot):
-        if re.match('http', url) is None:
-            return
         weibo_item = {
             'title': title,
             'url': url,
@@ -31,7 +28,8 @@ class DataModels:
             'url_md5': hashlib.md5(url.encode(encoding='UTF-8')).hexdigest(),
             'create_time': time.time()
         }
-        insert_mongo(self.db.weibo, weibo_item)
+        print(str(weibo_item))
+        # insert_mongo(self.db.weibo, weibo_item)
 
     # 持久化知乎热榜
     def save_zhihu(self, title, url, desc, hot):

@@ -29,8 +29,6 @@ import reactor.core.publisher.Mono;
 public class TopController {
 
     @Autowired
-    private WeiboHotMongoRepository weiboHotMongoRepository;
-    @Autowired
     private MongoTemplate mongoTemplate;
 
     @ApiOperation(value = "获取微博热门")

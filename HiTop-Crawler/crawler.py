@@ -4,6 +4,7 @@ import aiohttp
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from models import DataModels
+import re
 
 thread_pool = ThreadPoolExecutor(100)
 
@@ -31,8 +32,13 @@ class CrawlHotData:
         for item in items:
             title = item.xpath('td[2]/a/text()')[0]
             url = parse.urljoin('https://s.weibo.com', item.xpath('td[2]/a/@href')[0])
-            hot = item.xpath('td[2]/span/text()')
-            print(title, url, hot)
+            if re.match('http', url) is None:
+                continue
+            try:
+                hot = item.xpath('td[2]/span/text()')[0]
+            except:
+                hot = 0
+            # print(title, url, hot)
             thread_pool.submit(self.data_models.save_weibo(str(title), str(url), str(hot)))
 
     # 爬取知乎热门
@@ -86,9 +92,9 @@ class CrawlHotData:
 if __name__ == '__main__':
     self = CrawlHotData()
     loop = asyncio.get_event_loop()
-    # task = [self.get_weibo_hot('https://s.weibo.com/top/summary')]
+    task = [self.get_weibo_hot('https://s.weibo.com/top/summary')]
     # task = [self.get_zhihu_hot('https://www.zhihu.com/hot')]
-    task = [self.get_github_hot('https://github.com/trending')]
+    # task = [self.get_github_hot('https://github.com/trending')]
     # CrawlHotData.get_weibo_host(self, 'https://s.weibo.com/top/summary')
     loop.run_until_complete(asyncio.gather(*task))
     loop.close()
