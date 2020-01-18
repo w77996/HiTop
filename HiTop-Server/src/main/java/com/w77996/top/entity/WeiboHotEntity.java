@@ -2,6 +2,7 @@ package com.w77996.top.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,6 +15,7 @@ import java.util.Date;
  * @date 2020/1/15 16:19
  */
 @Data
+@Builder
 @Document(collection = "weibo")
 public class WeiboHotEntity {
 
@@ -30,5 +32,5 @@ public class WeiboHotEntity {
     private String urlMd5;
 
 //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private String createTime;
+    private Date createTime;
 }
