@@ -61,9 +61,10 @@ class CrawlHotData:
                 if desc:
                     desc = desc[0].strip()
                 else:
-                    desc = ''
+                    #desc = ''
+                    continue
                 print(title, url, desc, hot)
-                thread_pool.submit(DataModels.save_zhihu(title=str(title), url=str(url), desc=str(desc), hot=str(hot)))
+                thread_pool.submit(self.data_models.save_zhihu(title=str(title), url=str(url), desc=str(desc), hot=str(hot)))
 
     # 爬取Github热门
     async def get_github_hot(self, url):
@@ -76,7 +77,8 @@ class CrawlHotData:
                     result_html = None
             items = result_html.xpath('//article[@class="Box-row"]')
             for item in items:
-                title = item.xpath('h1/a/span[2]/text()')[0].strip().replace('/', '')
+                title = item.xpath('h1/a/@href')[0].strip()[1:]
+
                 url = item.xpath('h1/a/@href')[0].strip()
                 try:
                     content = item.xpath('p[contains(@class,"col-9")]/text()')[0].strip()
@@ -84,8 +86,8 @@ class CrawlHotData:
                     content = ''
                 if title and url:
                     url = parse.urljoin('https://github.com/', url)
-                    print(title, url, content)
-                    thread_pool.submit(DataModels.save_github(title=str(title), url=str(url)))
+                print(title, url, content)
+                thread_pool.submit(self.data_models.save_github(title=str(title), url=str(url)))
                     # await Hot.addHot(title=str(title), url=str(url), block='Github', content=content)
 
 

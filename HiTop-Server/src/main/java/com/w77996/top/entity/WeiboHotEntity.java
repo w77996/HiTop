@@ -2,6 +2,7 @@ package com.w77996.top.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.w77996.top.entity.base.TopBaseEntity;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -16,21 +17,9 @@ import java.util.Date;
  */
 @Data
 @Builder
-@Document(collection = "weibo")
-public class WeiboHotEntity {
-
-    @Id
-    private String id;
-
-    private String title;
-
-    private String url;
+@Document(collection = "weibo_hot")
+public class WeiboHotEntity extends TopBaseEntity {
 
     private String hot;
 
-    @JsonIgnore
-    private String urlMd5;
-
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
 }

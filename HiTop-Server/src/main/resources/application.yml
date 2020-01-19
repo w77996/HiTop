@@ -6,4 +6,5 @@ spring:
       database: admin
       username: admin
       password: test
+      field-naming-strategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy
 
