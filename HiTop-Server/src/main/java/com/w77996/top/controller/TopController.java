@@ -46,19 +46,21 @@ public class TopController {
         return Result.success(mongoTemplate.find(query,WeiboHotEntity.class));
     }
 
+    @ApiOperation(value = "获取所有微博热门")
     @IgnoreToken
     @GetMapping("/weibo/list")
     public Result<List<WeiboHotEntity>> getWeiboHotAll(){
         return Result.success(mongoTemplate.findAll(WeiboHotEntity.class));
     }
 
+    @ApiOperation(value = "获取微博热门")
     @IgnoreToken
     @GetMapping("/weibo/{id}")
     public Result<WeiboHotEntity> getWeiboHotById(@PathVariable("id") String id){
         return Result.success(mongoTemplate.findById(id,WeiboHotEntity.class));
     }
 
-
+    @ApiOperation(value = "获取Github趋势")
     @IgnoreToken
     @GetMapping("/github")
     public Result<List<GithubTrendingEntity>> getGithubTrendingList(){
@@ -69,12 +71,24 @@ public class TopController {
         return Result.success(mongoTemplate.find(query,GithubTrendingEntity.class));
     }
 
+    @ApiOperation(value = "获取知乎热门")
     @IgnoreToken
     @GetMapping("/zhihu")
     public Result<List<ZhihuHotEntity>> getZhihuHotList(){
         Query query = new Query()
                 .addCriteria(Criteria.where("create_time")
                         .gt(DateUtil.format(DateUtil.offsetHour(DateUtil.date(),-1), DatePattern.NORM_DATETIME_PATTERN)));
+        return Result.success(mongoTemplate.find(query,ZhihuHotEntity.class));
+    }
+
+    @ApiOperation(value = "获取知乎热门")
+    @IgnoreToken
+    @GetMapping("/web")
+    public Result<List<ZhihuHotEntity>> test(){
+        Query query = new Query()
+                .addCriteria(Criteria.where("create_time")
+                        .gt(DateUtil.format(DateUtil.offsetHour(DateUtil.date(),-1), DatePattern.NORM_DATETIME_PATTERN)));
+
         return Result.success(mongoTemplate.find(query,ZhihuHotEntity.class));
     }
 

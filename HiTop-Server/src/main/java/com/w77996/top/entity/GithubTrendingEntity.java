@@ -1,5 +1,6 @@
 package com.w77996.top.entity;
 
+import com.w77996.top.entity.base.TopBaseEntity;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Builder
 @Document(collection = "github_trending")
-public class GithubTrendingEntity {
+public class GithubTrendingEntity extends TopBaseEntity {
 
 
 }

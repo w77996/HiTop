@@ -39,7 +39,7 @@ class CrawlHotData:
             except:
                 hot = 0
             # print(title, url, hot)
-            thread_pool.submit(self.data_models.save_weibo(str(title), str(url), str(hot)))
+            thread_pool.submit(self.data_models.save_weibo_hot(str(title), str(url), str(hot)))
 
     # 爬取知乎热门
     async def get_zhihu_hot(self, url):
@@ -64,7 +64,7 @@ class CrawlHotData:
                     #desc = ''
                     continue
                 print(title, url, desc, hot)
-                thread_pool.submit(self.data_models.save_zhihu(title=str(title), url=str(url), desc=str(desc), hot=str(hot)))
+                thread_pool.submit(self.data_models.save_zhihu_hot(title=str(title), url=str(url), desc=str(desc), hot=str(hot)))
 
     # 爬取Github热门
     async def get_github_hot(self, url):
@@ -87,14 +87,15 @@ class CrawlHotData:
                 if title and url:
                     url = parse.urljoin('https://github.com/', url)
                 print(title, url, content)
-                thread_pool.submit(self.data_models.save_github(title=str(title), url=str(url)))
+                thread_pool.submit(self.data_models.save_github_trending(title=str(title), url=str(url)))
                     # await Hot.addHot(title=str(title), url=str(url), block='Github', content=content)
 
 
 if __name__ == '__main__':
     self = CrawlHotData()
     loop = asyncio.get_event_loop()
-    task = [self.get_weibo_hot('https://s.weibo.com/top/summary')]
+    task = [self.get_weibo_hot('https://s.weibo.com/top/summary'),self.get_zhihu_hot('https://www.zhihu.com/hot'),self.get_github_hot('https://github.com/trending')]
+    # task = [self.get_weibo_hot('https://s.weibo.com/top/summary')]
     # task = [self.get_zhihu_hot('https://www.zhihu.com/hot')]
     # task = [self.get_github_hot('https://github.com/trending')]
     # CrawlHotData.get_weibo_host(self, 'https://s.weibo.com/top/summary')

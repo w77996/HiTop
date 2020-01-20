@@ -14,14 +14,20 @@ public class TopBaseEntity {
 
     @Id
     private String id;
-
+    /**
+     * 标题
+     */
     private String title;
-
+    /**
+     * 跳转链接
+     */
     private String url;
 
     @JsonIgnore
     private String key;
-
+    /**
+     * 创建时间
+     */
     private String createTime;
 
 }

@@ -1,3 +1,7 @@
+server:
+  port: 8181
+
+
 spring:
   data:
     mongodb:
@@ -7,4 +11,4 @@ spring:
       username: admin
       password: test
       field-naming-strategy: org.springframework.data.mapping.model.SnakeCaseFieldNamingStrategy
-
+  profiles: default
