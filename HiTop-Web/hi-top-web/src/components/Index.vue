@@ -13,7 +13,7 @@
       @load="onLoad"
     >
       <van-tabs v-model="active" swipeable>
-        <van-tab v-for="index in 4" :title="'选项 ' + index">
+        <van-tab v-for="index in tanItem" :title="index">
           <van-cell
             v-for="item in list"
             :key="item"
@@ -34,6 +34,7 @@
     data() {
       return {
         list: [],
+        tanItem: ['微博热门','知乎热门','Github趋势'],
         loading: false,
         finished: false
       };
