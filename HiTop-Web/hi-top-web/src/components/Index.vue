@@ -60,8 +60,21 @@
             this.finished = true;
           }
         }, 500);
+      },
+      onLoadWeiboHot() {
+
+      },
+      onLoadZhihuHot() {
+
+      },
+      onLoadGithubTrend() {
+
       }
+
     },
+    mounted:{
+      
+    }
 
   }
 </script>

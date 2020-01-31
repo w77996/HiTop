@@ -30,6 +30,9 @@ axios.interceptors.response.use(
   response => {
     return response
   },
+  success =>{
+    console.log(success.response)
+  },
   error => {
     if (error.response) {
       switch (error.response.status) {
