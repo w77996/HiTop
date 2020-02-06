@@ -1,5 +1,4 @@
 /**
- * Created by superman on 17/2/16.
  * http配置
  */
 
