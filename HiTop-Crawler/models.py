@@ -30,7 +30,7 @@ class DataModels:
             'create_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         }
         print(str(weibo_hot_item))
-        insert_mongo(self.db.weibo_hot, weibo_hot_item)
+        # insert_mongo(self.db.weibo_hot, weibo_hot_item)
 
     # 持久化知乎热榜
     def save_zhihu_hot(self, title, url, desc, hot):
@@ -42,19 +42,19 @@ class DataModels:
             'create_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         }
         print(str(zhihu_hot_item))
-        insert_mongo(self.db.zhihu_hot, zhihu_hot_item)
+        # insert_mongo(self.db.zhihu_hot, zhihu_hot_item)
 
     # 持久化Github热榜
     def save_github_trending(self, title, url):
         github_trending_item = {
             'title': title,
             'url': url,
-            # 'key': 'github_trending_' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + '_' + hashlib.md5(
-            #     url.encode(encoding='UTF-8')).hexdigest(),
+            'key': 'github_trending_' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + '_' + hashlib.md5(
+                url.encode(encoding='UTF-8')).hexdigest(),
             'create_time': time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         }
         print(str(github_trending_item))
-        insert_mongo(self.db.github_trending, github_trending_item)
+        # insert_mongo(self.db.github_trending, github_trending_item)
 
     def save_weixin(self):
         print(self)
