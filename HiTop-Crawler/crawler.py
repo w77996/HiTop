@@ -94,10 +94,10 @@ class CrawlHotData:
 if __name__ == '__main__':
     self = CrawlHotData()
     loop = asyncio.get_event_loop()
-    # task = [self.get_weibo_hot('https://s.weibo.com/top/summary'),self.get_zhihu_hot('https://www.zhihu.com/hot'),self.get_github_hot('https://github.com/trending')]
+    task = [self.get_weibo_hot('https://s.weibo.com/top/summary'),self.get_zhihu_hot('https://www.zhihu.com/hot'),self.get_github_hot('https://github.com/trending')]
     # task = [self.get_weibo_hot('https://s.weibo.com/top/summary')]
     # task = [self.get_zhihu_hot('https://www.zhihu.com/hot')]
-    task = [self.get_github_hot('https://github.com/trending')]
+    # task = [self.get_github_hot('https://github.com/trending')]
     # CrawlHotData.get_weibo_host(self, 'https://s.weibo.com/top/summary')
     loop.run_until_complete(asyncio.gather(*task))
     loop.close()

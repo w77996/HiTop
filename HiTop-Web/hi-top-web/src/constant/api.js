@@ -1,3 +1,3 @@
 export default {
-  weibo_hot: '/weibo'
+  weibo_hot: '/top/weibo'
 }

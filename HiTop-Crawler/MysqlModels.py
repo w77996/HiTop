@@ -86,7 +86,7 @@ class DataModels:
 
     def check_url_exist(self, key):
         cur = self.conn.cursor()
-        rows = cur.execute('select * from top where url_key = %s', (key))
+        rows = cur.execute('select * from t_top where url_key = %s', (key))
         cur.close()
         if rows == 0:
             return False
@@ -94,6 +94,6 @@ class DataModels:
 
     def insert_mysql(self, data):
         cur = self.conn.cursor()
-        cur.execute('insert into top(title, url ,type ,url_key, feature) values (%s,%s,%s,%s,%s)', data)
+        cur.execute('insert into t_top(title, url ,type ,url_key, feature) values (%s,%s,%s,%s,%s)', data)
         self.conn.commit()
         cur.close()

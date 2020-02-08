@@ -12,12 +12,14 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <van-tabs v-model="active" swipeable>
-        <van-tab v-for="index in tanItem" :title="index">
+      <van-tabs swipeable>
+        <van-tab v-for="index in tanItem" :key="index" :title="index">
           <van-cell
             v-for="item in list"
             :key="item"
-            :title="item"
+            :title="item.title"
+            :value="item.feature"
+
           />
         </van-tab>
       </van-tabs>
@@ -29,6 +31,9 @@
 </template>
 
 <script>
+  import {Toast} from "vant";
+  import api from "../constant/api";
+
   export default {
     name: "Index",
     data() {
@@ -45,6 +50,7 @@
       },
       onClickRight() {
         Toast('按钮');
+        this.onLoadWeiboHot()
       },
       onLoad() {
         // 异步更新数据
@@ -62,7 +68,16 @@
         }, 500);
       },
       onLoadWeiboHot() {
+        this.axios.get(api.weibo_hot)
+          .then(response => {
+            console.log(response)
+            let resCode = response.data.code
+            if(resCode == 200){
+              console.log(response.data.data.list)
+              this.list = response.data.data.list
+            }
 
+          })
       },
       onLoadZhihuHot() {
 
@@ -72,8 +87,11 @@
       }
 
     },
-    mounted:{
-      
+    mounted(){
+      this.onLoadWeiboHot()
+    },
+    created(){
+
     }
 
   }
