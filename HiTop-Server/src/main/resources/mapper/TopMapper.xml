@@ -2,7 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.w77996.top.mapper.TopMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.w77996.top.entity.TopEntity">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="url" property="url" />
+        <result column="type" property="type" />
+        <result column="url_key" property="urlKey" />
+        <result column="feature" property="feature" typeHandler="com.w77996.top.core.handler.mybaits.ObjectJsonHandler"/>
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, url, type, url_key, feature, create_time, update_time
+    </sql>
+
+    <!--查询微博热门-->
     <select id="selectAllWeiboHot" resultType="com.w77996.top.entity.TopEntity">
         select * from t_top where type = 1
+    </select>
+
+    <!--查询微博热门-->
+    <select id="getWeiboHotList" resultType="com.w77996.top.entity.TopEntity">
+        select * from t_top where type = 1 order by create_time desc
+    </select>
+
+    <!--查询知乎热门-->
+    <select id="getZhihuHotList" resultType="com.w77996.top.entity.TopEntity">
+        select * from t_top where type = 2 order by create_time desc
+    </select>
+
+    <!--查询github趋势-->
+    <select id="getGithubTrendList" resultType="com.w77996.top.entity.TopEntity">
+         select * from t_top where type = 3 order by create_time desc
     </select>
 </mapper>

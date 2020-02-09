@@ -31,7 +31,7 @@ public class MpGeneratorUtils {
         gc.setEnableCache(false);   // XML 二级缓存
         gc.setBaseResultMap(true);  // XML ResultMap
         gc.setBaseColumnList(true); // XML columList
-        gc.setAuthor("ellen");
+        gc.setAuthor("w77996");
 
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
         // gc.setMapperName("%sDao");
@@ -55,8 +55,8 @@ public class MpGeneratorUtils {
         });
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("123456");
-        dsc.setUrl("jdbc:mysql://127.0.0.1/ssm?useUnicode=true&characterEncoding=UTF-8");
+        dsc.setPassword("1047239335");
+        dsc.setUrl("jdbc:mysql://116.62.144.245/hi-top?useUnicode=true&characterEncoding=UTF-8");
         mpg.setDataSource(dsc);
 
         // 策略配置
@@ -65,7 +65,7 @@ public class MpGeneratorUtils {
         // strategy.setTablePrefix(new String[] { "tlog_", "tsys_" });// 此处可以修改为您的表前缀
         //strategy.setTablePrefix(new String[] { "tb_"});// 此处可以修改为您的表前缀
         strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
-        strategy.setInclude(new String[]{"student"}); // 需要生成的表
+        strategy.setInclude(new String[]{"t_top"}); // 需要生成的表
         // strategy.setExclude(new String[]{"test"}); // 排除生成的表
         // 自定义实体父类
         //strategy.setSuperEntityClass("com.kuyunEduShop.domain");

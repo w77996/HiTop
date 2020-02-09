@@ -12,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 /**
  * @author w77996
  * @description
@@ -29,11 +27,29 @@ public class TopController {
     @Autowired
     private TopService topService;
 
+    @ApiOperation(value = "获取所有微博热门")
+    @GetMapping("/all/weibo")
+    public Result<PageInfo<TopEntity>> getAllWeiboHotList(){
+//        log.info(DateUtil.format(DateUtil.offsetHour(DateUtil.date(),-1), DatePattern.NORM_DATETIME_PATTERN));
+        return Result.success(topService.selectAllWeiboHot());
+    }
+
     @ApiOperation(value = "获取微博热门")
     @GetMapping("/weibo")
-    public Result<PageInfo<TopEntity>> getNowWeiboHotList(){
-        log.info(DateUtil.format(DateUtil.offsetHour(DateUtil.date(),-1), DatePattern.NORM_DATETIME_PATTERN));
+    public Result<PageInfo<TopEntity>> getWeiboHotList(){
         return Result.success(topService.selectAllWeiboHot());
+    }
+
+    @ApiOperation(value = "获取知乎热门")
+    @GetMapping("/zhihu")
+    public Result<PageInfo<TopEntity>> getZhihuHotList(){
+        return Result.success(topService.getZhihuHotList());
+    }
+
+    @ApiOperation(value = "获取Github趋势")
+    @GetMapping("/github")
+    public Result<PageInfo<TopEntity>> getGithubTrendList(){
+        return Result.success(topService.getGithubTrendList());
     }
 
 

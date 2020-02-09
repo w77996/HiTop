@@ -16,4 +16,10 @@ public interface TopMapper extends BaseMapper<TopEntity> {
 
 
     List<TopEntity> selectAllWeiboHot();
+
+    List<TopEntity> getWeiboHotList();
+
+    List<TopEntity> getZhihuHotList();
+
+    List<TopEntity> getGithubTrendList();
 }

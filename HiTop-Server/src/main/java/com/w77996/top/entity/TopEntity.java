@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import java.util.Map;
 
 /**
  * @author w77996
@@ -35,7 +34,7 @@ public class TopEntity {
     /**
      * 其他参数
      */
-    private String feature;
+    private JSONObject feature;
     /**
      * 创建时间
      */

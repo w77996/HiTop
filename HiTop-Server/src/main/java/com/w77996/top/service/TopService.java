@@ -11,4 +11,10 @@ import com.w77996.top.entity.TopEntity;
 public interface TopService {
 
     PageInfo<TopEntity> selectAllWeiboHot();
+
+    PageInfo<TopEntity> getWeiboHotList();
+
+    PageInfo<TopEntity> getZhihuHotList();
+
+    PageInfo<TopEntity> getGithubTrendList();
 }
