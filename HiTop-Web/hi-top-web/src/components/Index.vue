@@ -4,22 +4,58 @@
       title="Hi热榜"
       right-text="按钮"
       @click-right="onClickRight">
-      <van-icon name="service-o" slot="right"/>
+      <van-icon name="search" slot="right" />
+
     </van-nav-bar>
 
-    <van-tabs v-model="active" @click="onTabClisk" swipeable>
-      <van-tab v-for="index in tanItem" :key="index" :title="index">
+    <van-tabs v-model="tabActive" @change="onTabChange" swipeable sticky>
+
+      <van-tab v-for="index in tanItem" :key="index" :title="index" >
+        <van-notice-bar
+          color="#1989fa"
+          background="#ecf9ff"
+          left-icon="info-o"
+        >
+          通知内容
+        </van-notice-bar>
         <van-list
           v-model="loading"
           :finished="finished"
-          finished-text="没有更多了"
-          @load="onLoad"
+          finished-text="-- 我到底部啦--"
         >
           <van-cell
-            v-for="item in weiboHotList"
-            :key="item"
-            :title="item.title"
+            v-for="(item,index) in dataList"
+            v-if="item.type == 1"
+            :key="item.id"
+            :title="(index+1) +'.'+item.title"
+            :value="tranNumber(item.feature.hot,0)"
+            :url="item.url"
+            title-class="title-class"
+            clickable
+            is-link>
+          </van-cell>
+          <van-cell
+            v-for="(item,index) in dataList"
+            v-if="item.type == 2"
+            :key="item.id"
+            :title="(index+1) +'.'+item.title"
             :value="item.feature.hot"
+            :label="item.feature.desc"
+            title-class="title-class"
+            label-class="label-class"
+            @click="onCellClick(item)"
+            style="min-width:70%"
+            center
+            is-link
+          />
+          <van-cell
+            center
+            v-for="item in dataList"
+            v-if="item.type == 3"
+            :key="item.id"
+            :title="item.title"
+            @click="onCellClick(item)"
+            is-link
           />
         </van-list>
       </van-tab>
@@ -34,34 +70,47 @@
 <script>
   import {Toast} from "vant";
   import api from "../constant/api";
+  import utils from "../utils/util";
 
   export default {
     name: "Index",
     data() {
       return {
-        weiboHotList: [],
-        zhihuHotList:[],
-        githubTrendList:[],
+        dataList: [],
         tanItem: ['微博热门', '知乎热门', 'Github趋势'],
         loading: false,
         finished: false,
-        active:0
+        tabActive:0
       };
     },
     methods: {
-      onClickLeft() {
-        Toast('返回');
-      },
       onClickRight() {
         Toast('按钮');
-        this.onLoadWeiboHot()
+        Toast(this.active)
       },
       onLoad() {
         // 异步更新数据
 
       },
-      onTabClisk(name) {
-        Toast(name)
+      onCellClick(event){
+
+        window.location.href=event.url
+        console.log(event)
+      },
+      onTabChange(index) {
+        if(index == 0){
+          this.loading = true
+          this.onLoadWeiboHot()
+          this.loading = false;
+        }else if(index == 1){
+          this.loading = true
+          this.onLoadZhihuHot()
+          this.loading = false
+        }else if(index == 2){
+          this.loading = true
+          this.onLoadGithubTrend()
+          this.loading = false
+        }
       },
       onLoadWeiboHot() {
         this.axios.get(api.weibo_hot)
@@ -70,7 +119,7 @@
             let resCode = response.data.code
             if (resCode == 200) {
               console.log(response.data.data.list)
-              this.list = response.data.data.list
+              this.dataList = response.data.data.list
               this.finished = true
             }
 
@@ -83,7 +132,7 @@
             let resCode = response.data.code
             if (resCode == 200) {
               console.log(response.data.data.list)
-              this.zhihuHotList = response.data.data.list
+              this.dataList = response.data.data.list
               this.finished = true
             }
 
@@ -96,13 +145,11 @@
             let resCode = response.data.code
             if (resCode == 200) {
               console.log(response.data.data.list)
-              this.githubTrendList = response.data.data.list
+              this.dataList = response.data.data.list
               this.finished = true
             }
-
           })
       }
-
     },
     mounted() {
       this.onLoadWeiboHot()
@@ -115,5 +162,18 @@
 </script>
 
 <style scoped>
-
+  .title-class {
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width:70%
+  }
+  .label-class {
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tab {
+    position: fixed;
+  }
 </style>
