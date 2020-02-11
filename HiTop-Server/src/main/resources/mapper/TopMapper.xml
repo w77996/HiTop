@@ -27,16 +27,16 @@
 
     <!--查询微博热门-->
     <select id="getWeiboHotList" resultType="com.w77996.top.entity.TopEntity">
-        select * from t_top where type = 1 order by create_time desc
+        select * from t_top where type = 1 and create_time > to_day(now()) order by create_time desc
     </select>
 
     <!--查询知乎热门-->
     <select id="getZhihuHotList" resultType="com.w77996.top.entity.TopEntity">
-        select * from t_top where type = 2 order by create_time desc
+        select * from t_top where type = 2 and create_time > to_day(now()) order by create_time desc
     </select>
 
     <!--查询github趋势-->
     <select id="getGithubTrendList" resultType="com.w77996.top.entity.TopEntity">
-         select * from t_top where type = 3 order by create_time desc
+         select * from t_top where type = 3 and create_time > to_day(now()) order by create_time desc
     </select>
 </mapper>

@@ -4,13 +4,11 @@
       title="Hi热榜"
       right-text="按钮"
       @click-right="onClickRight">
-      <van-icon name="search" slot="right" />
-
+      <van-icon name="search" slot="right"/>
     </van-nav-bar>
 
     <van-tabs v-model="tabActive" @change="onTabChange" swipeable sticky>
-
-      <van-tab v-for="index in tanItem" :key="index" :title="index" >
+      <van-tab v-for="index in tanItem" :key="index" :title="index">
         <van-notice-bar
           color="#1989fa"
           background="#ecf9ff"
@@ -28,7 +26,7 @@
             v-if="item.type == 1"
             :key="item.id"
             :title="(index+1) +'.'+item.title"
-            :value="tranNumber(item.feature.hot,0)"
+            :value="item.feature.hot"
             :url="item.url"
             title-class="title-class"
             clickable
@@ -80,7 +78,7 @@
         tanItem: ['微博热门', '知乎热门', 'Github趋势'],
         loading: false,
         finished: false,
-        tabActive:0
+        tabActive: 0
       };
     },
     methods: {
@@ -92,21 +90,21 @@
         // 异步更新数据
 
       },
-      onCellClick(event){
+      onCellClick(event) {
 
-        window.location.href=event.url
+        window.location.href = event.url
         console.log(event)
       },
       onTabChange(index) {
-        if(index == 0){
+        if (index == 0) {
           this.loading = true
           this.onLoadWeiboHot()
           this.loading = false;
-        }else if(index == 1){
+        } else if (index == 1) {
           this.loading = true
           this.onLoadZhihuHot()
           this.loading = false
-        }else if(index == 2){
+        } else if (index == 2) {
           this.loading = true
           this.onLoadGithubTrend()
           this.loading = false
@@ -123,7 +121,9 @@
               this.finished = true
             }
 
-          })
+          }).catch(error => {
+              console.log(error)
+          });
       },
       onLoadZhihuHot() {
         this.axios.get(api.zhihu_hot)
@@ -163,16 +163,18 @@
 
 <style scoped>
   .title-class {
-    white-space:nowrap;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-width:70%
+    min-width: 70%
   }
+
   .label-class {
-    white-space:nowrap;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
   .tab {
     position: fixed;
   }

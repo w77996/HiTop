@@ -57,14 +57,15 @@ class CrawlHotData:
                 title = item.xpath('div[2]/a/h2/text()')[0]
                 desc = item.xpath('div[2]/a/p/text()')
                 url = item.xpath('div[2]/a/@href')[0]
-                hot = item.xpath('div[2]/div/text()')[0]
+                hot = item.xpath('div[2]/div/text()')[0].replace('万热度', '')
                 if desc:
                     desc = desc[0].strip()
                 else:
-                    #desc = ''
+                    # desc = ''
                     continue
                 print(title, url, desc, hot)
-                thread_pool.submit(self.data_models.save_zhihu_hot(title=str(title), url=str(url), desc=str(desc), hot=str(hot)))
+                thread_pool.submit(
+                    self.data_models.save_zhihu_hot(title=str(title), url=str(url), desc=str(desc), hot=str(hot)))
 
     # 爬取Github热门
     async def get_github_hot(self, url):
@@ -78,26 +79,28 @@ class CrawlHotData:
             items = result_html.xpath('//article[@class="Box-row"]')
             for item in items:
                 title = item.xpath('h1/a/@href')[0].strip()[1:]
-
                 url = item.xpath('h1/a/@href')[0].strip()
                 try:
                     content = item.xpath('p[contains(@class,"col-9")]/text()')[0].strip()
+                    desc = item.xpath('p/text()')[0].strip()
                 except:
                     content = ''
+                    desc = ''
                 if title and url:
                     url = parse.urljoin('https://github.com/', url)
-                print(title, url, content)
-                thread_pool.submit(self.data_models.save_github_trending(title=str(title), url=str(url)))
-                    # await Hot.addHot(title=str(title), url=str(url), block='Github', content=content)
+                print(title, url, content, desc)
+                # thread_pool.submit(
+                #     self.data_models.save_github_trending(title=str(title), url=str(url), desc=str(desc)))
+                # await Hot.addHot(title=str(title), url=str(url), block='Github', content=content)
 
 
 if __name__ == '__main__':
     self = CrawlHotData()
     loop = asyncio.get_event_loop()
-    task = [self.get_weibo_hot('https://s.weibo.com/top/summary'),self.get_zhihu_hot('https://www.zhihu.com/hot'),self.get_github_hot('https://github.com/trending')]
+    # task = [self.get_weibo_hot('https://s.weibo.com/top/summary'),self.get_zhihu_hot('https://www.zhihu.com/hot'),self.get_github_hot('https://github.com/trending')]
     # task = [self.get_weibo_hot('https://s.weibo.com/top/summary')]
     # task = [self.get_zhihu_hot('https://www.zhihu.com/hot')]
-    # task = [self.get_github_hot('https://github.com/trending')]
+    task = [self.get_github_hot('https://github.com/trending')]
     # CrawlHotData.get_weibo_host(self, 'https://s.weibo.com/top/summary')
     loop.run_until_complete(asyncio.gather(*task))
     loop.close()

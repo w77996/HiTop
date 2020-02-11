@@ -36,19 +36,19 @@ public class TopController {
 
     @ApiOperation(value = "获取微博热门")
     @GetMapping("/weibo")
-    public Result<PageInfo<TopEntity>> getWeiboHotList(){
+    public Result<PageInfo<TopEntity>> getTodayWeiboHotList(){
         return Result.success(topService.selectAllWeiboHot());
     }
 
     @ApiOperation(value = "获取知乎热门")
     @GetMapping("/zhihu")
-    public Result<PageInfo<TopEntity>> getZhihuHotList(){
+    public Result<PageInfo<TopEntity>> getTodayZhihuHotList(){
         return Result.success(topService.getZhihuHotList());
     }
 
     @ApiOperation(value = "获取Github趋势")
     @GetMapping("/github")
-    public Result<PageInfo<TopEntity>> getGithubTrendList(){
+    public Result<PageInfo<TopEntity>> getTodayGithubTrendList(){
         return Result.success(topService.getGithubTrendList());
     }
 

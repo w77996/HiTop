@@ -24,11 +24,12 @@ class DataModels:
     def save_weibo_hot(self, title, url, hot):
         key = 'weibo_hot_' + hashlib.md5(url.encode(encoding='UTF-8')).hexdigest()
         exist = self.check_url_exist(key)
-        if exist:
-            return
         feature = {
             'hot': hot
         }
+        if exist:
+            self.update_exist(key, feature)
+            return
         # weibo_hot_item = {
         #     'title': title,
         #     'url': url,
@@ -36,7 +37,7 @@ class DataModels:
         #     'url_key': key,
         #     'feature': json.dumps(feature)
         # }
-        weibo_hot_item = (title, url, '1', key, json.dumps(feature,ensure_ascii=False))
+        weibo_hot_item = (title, url, '1', key, json.dumps(feature, ensure_ascii=False))
         print(str(weibo_hot_item))
         self.insert_mysql(weibo_hot_item)
         # insert_mongo(self.db.weibo_hot, weibo_hot_item)
@@ -44,13 +45,15 @@ class DataModels:
     # 持久化知乎热榜
     def save_zhihu_hot(self, title, url, desc, hot):
         key = 'zhihu_hot_' + hashlib.md5(url.encode(encoding='UTF-8')).hexdigest()
-        exist = self.check_url_exist(key)
-        if exist:
-            return
         feature = {
             'desc': desc,
             'hot': hot
         }
+        exist = self.check_url_exist(key)
+        if exist:
+            self.update_exist(key, feature)
+            return
+
         # zhihu_hot_item = {
         #     'title': title,
         #     'url': url,
@@ -64,9 +67,12 @@ class DataModels:
         # insert_mongo(self.db.zhihu_hot, zhihu_hot_item)
 
     # 持久化Github热榜
-    def save_github_trending(self, title, url):
+    def save_github_trending(self, title, url, desc):
         key = 'github_trending_' + hashlib.md5(url.encode(encoding='UTF-8')).hexdigest()
         exist = self.check_url_exist(key)
+        feature = {
+            'desc': desc,
+        }
         if exist:
             return
         # github_trending_item = {
@@ -76,7 +82,7 @@ class DataModels:
         #     'url_key': 'github_trending_' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + '_' + hashlib.md5(
         #         url.encode(encoding='UTF-8')).hexdigest()
         # }
-        github_trending_item = (title, url, 3, key, None)
+        github_trending_item = (title, url, 3, key, feature)
         print(str(github_trending_item))
         self.insert_mysql(github_trending_item)
         # insert_mongo(self.db.github_trending, github_trending_item)
@@ -91,6 +97,11 @@ class DataModels:
         if rows == 0:
             return False
         return True
+
+    def update_exist(self, key, feature):
+        cur = self.conn.cursor()
+        cur.execute('update t_top set feature= %s where url_key = %s', (feature, key))
+        cur.close()
 
     def insert_mysql(self, data):
         cur = self.conn.cursor()
