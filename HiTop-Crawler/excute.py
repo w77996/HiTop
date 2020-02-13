@@ -18,5 +18,5 @@ def excute_crawler():
 if __name__ == '__main__':
     scheduler = BlockingScheduler()
 
-    scheduler.add_job(excute_crawler, 'cron', hour=23, minute=33)
+    scheduler.add_job(excute_crawler, 'interval',  seconds=50)
     scheduler.start()

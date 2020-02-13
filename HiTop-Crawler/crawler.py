@@ -89,8 +89,8 @@ class CrawlHotData:
                 if title and url:
                     url = parse.urljoin('https://github.com/', url)
                 print(title, url, content, desc)
-                # thread_pool.submit(
-                #     self.data_models.save_github_trending(title=str(title), url=str(url), desc=str(desc)))
+                thread_pool.submit(
+                    self.data_models.save_github_trending(title=str(title), url=str(url), desc=str(desc)))
                 # await Hot.addHot(title=str(title), url=str(url), block='Github', content=content)
 
 

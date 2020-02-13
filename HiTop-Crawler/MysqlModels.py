@@ -70,10 +70,14 @@ class DataModels:
     def save_github_trending(self, title, url, desc):
         key = 'github_trending_' + hashlib.md5(url.encode(encoding='UTF-8')).hexdigest()
         exist = self.check_url_exist(key)
-        feature = {
-            'desc': desc,
-        }
-        if exist:
+        if desc is None:
+            feature = None
+        else:
+            feature = {
+                'desc': desc,
+            }
+        if exist and feature is not None:
+            self.update_exist(key, feature)
             return
         # github_trending_item = {
         #     'title': title,
