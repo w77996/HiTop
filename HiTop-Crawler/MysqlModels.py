@@ -29,7 +29,7 @@ class DataModels:
         }
         if exist:
             print(key, feature)
-            self.update_exist(key, hot)
+            self.update_exist_hot(key, hot)
             return
         # weibo_hot_item = {
         #     'title': title,
@@ -52,7 +52,7 @@ class DataModels:
         }
         exist = self.check_url_exist(key)
         if exist:
-            self.update_exist(key, desc, hot)
+            self.update_exist_desc_hot(key, desc, hot)
             return
 
         # zhihu_hot_item = {
@@ -78,7 +78,7 @@ class DataModels:
                 'desc': desc,
             }
         if exist and feature is not None:
-            self.update_exist(key, feature)
+            self.update_exist_desc(key, desc)
             return
         # github_trending_item = {
         #     'title': title,
@@ -87,7 +87,7 @@ class DataModels:
         #     'url_key': 'github_trending_' + time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + '_' + hashlib.md5(
         #         url.encode(encoding='UTF-8')).hexdigest()
         # }
-        github_trending_item = (title, url, 3, key, feature)
+        github_trending_item = (title, url, 3, key, json.dumps(feature, ensure_ascii=False))
         print(str(github_trending_item))
         self.insert_mysql(github_trending_item)
         # insert_mongo(self.db.github_trending, github_trending_item)
@@ -103,19 +103,17 @@ class DataModels:
             return False
         return True
 
-    def update_exist(self, key, desc, hot):
+    def update_exist_desc_hot(self, key, desc, hot):
         cur = self.conn.cursor()
-
-        cur.execute('update t_top set feature = json_set(feature,\'$.desc\',%s,\'$.hot\',%s) where url_key = %s',
-                    (desc, hot, key))
+        cur.execute('update t_top set feature = json_set(feature,\'$.desc\',%s,\'$.hot\',%s) where url_key = %s',(desc, hot, key))
         cur.close()
 
-    def update_exist(self, key, hot):
+    def update_exist_hot(self, key, hot):
         cur = self.conn.cursor()
         cur.execute('update t_top set feature = json_set(feature,\'$.hot\',%s) where url_key = %s', (hot, key))
         cur.close()
 
-    def update_exist(self, key, desc):
+    def update_exist_desc(self, key, desc):
         cur = self.conn.cursor()
         cur.execute('update t_top set feature = json_set(feature,\'$.desc\',%s) where url_key = %s', (desc, key))
         cur.close()
