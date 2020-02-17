@@ -28,7 +28,7 @@ class DataModels:
             'hot': hot
         }
         if exist:
-            print(key,feature)
+            print(key, feature)
             self.update_exist(key, hot)
             return
         # weibo_hot_item = {
@@ -52,7 +52,7 @@ class DataModels:
         }
         exist = self.check_url_exist(key)
         if exist:
-            self.update_exist(key, feature)
+            self.update_exist(key, desc, hot)
             return
 
         # zhihu_hot_item = {
@@ -103,16 +103,21 @@ class DataModels:
             return False
         return True
 
-    def update_exist(self, key, desc,hot):
+    def update_exist(self, key, desc, hot):
         cur = self.conn.cursor()
 
-        cur.execute('update t_top set feature = json_set(feature,\'$.desc\',%s,\'$.hot\',%s) where url_key = %s', (desc, hot,key))
+        cur.execute('update t_top set feature = json_set(feature,\'$.desc\',%s,\'$.hot\',%s) where url_key = %s',
+                    (desc, hot, key))
         cur.close()
 
     def update_exist(self, key, hot):
         cur = self.conn.cursor()
+        cur.execute('update t_top set feature = json_set(feature,\'$.hot\',%s) where url_key = %s', (hot, key))
+        cur.close()
 
-        cur.execute('update t_top set feature = json_set(feature,\'$.hot\',%s) where url_key = %s',( hot, key))
+    def update_exist(self, key, desc):
+        cur = self.conn.cursor()
+        cur.execute('update t_top set feature = json_set(feature,\'$.desc\',%s) where url_key = %s', (desc, key))
         cur.close()
 
     def insert_mysql(self, data):
