@@ -1,9 +1,0 @@
-spring:
-  data:
-    mongodb:
-      host: 116.62.144.245
-      port: 27017
-      database: admin
-      username: admin
-      password: test
-
