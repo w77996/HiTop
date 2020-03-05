@@ -17,7 +17,7 @@ class DataModels:
 
     def __init__(self):
         # 初始化mysql连接
-        self.conn = pymysql.connect(host='116.62.144.245', user='root', password='1047239335', database='hi-top',
+        self.conn = pymysql.connect(host='', user='', password='', database='hi-top',
                                     charset='utf8')
 
     # 持久化微博热搜
