@@ -37,7 +37,7 @@ public class TopController {
     @ApiOperation(value = "获取微博热门")
     @GetMapping("/weibo")
     public Result<PageInfo<TopEntity>> getTodayWeiboHotList(){
-        return Result.success(topService.selectAllWeiboHot());
+        return Result.success(topService.getWeiboHotList());
     }
 
     @ApiOperation(value = "获取知乎热门")

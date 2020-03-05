@@ -59,7 +59,7 @@ class CrawlHotData:
                 title = item.xpath('div[2]/a/h2/text()')[0]
                 desc = item.xpath('div[2]/a/p/text()')
                 url = item.xpath('div[2]/a/@href')[0]
-                hot = item.xpath('div[2]/div/text()')[0].replace('万热度', '')
+                hot = item.xpath('div[2]/div/text()')[0].replace('万热度', '').strip()
                 if desc:
                     desc = desc[0].strip()
                 else:

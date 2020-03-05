@@ -25,8 +25,10 @@ public class GlobalExceptionHandler {
         log.error("enter exceptionHandler");
         if (e instanceof GlobalException) {
             GlobalException ex = (GlobalException) e;
+            log.error(e.getMessage());
             return Result.error(ex.getCode());
         }
+        log.error(e.getMessage());
         return Result.error(ResultCode.ERROR.getCode(),e.getMessage());
     }
 }

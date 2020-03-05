@@ -22,7 +22,8 @@ def excute_crawler():
 
 if __name__ == '__main__':
     print("开始执行定时器")
+    # excute_crawler()
     scheduler = BlockingScheduler()
-
-    scheduler.add_job(excute_crawler, 'interval', seconds=3600)
+    #
+    scheduler.add_job(excute_crawler, 'cron',  hour='0-23')
     scheduler.start()

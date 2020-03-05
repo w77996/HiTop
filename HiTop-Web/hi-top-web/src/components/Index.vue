@@ -9,13 +9,6 @@
 
     <van-tabs v-model="tabActive" @change="onTabChange" swipeable sticky>
       <van-tab v-for="index in tanItem" :key="index" :title="index">
-        <van-notice-bar
-          color="#1989fa"
-          background="#ecf9ff"
-          left-icon="info-o"
-        >
-          通知内容
-        </van-notice-bar>
         <van-list
           v-model="loading"
           :finished="finished"
@@ -26,7 +19,7 @@
             v-if="item.type == 1"
             :key="item.id"
             :title="(index+1) +'.'+item.title"
-            :value="item.feature.hot"
+            :value="(item.feature.hot!=0?item.feature.hot:'置顶')"
             :url="item.url"
             title-class="title-class"
             clickable
@@ -35,6 +28,20 @@
           <van-cell
             v-for="(item,index) in dataList"
             v-if="item.type == 2"
+            :key="item.id"
+            :title="(index+1) +'.'+item.title"
+            :value="item.feature.hot+'万' "
+            :label="item.feature.desc"
+            title-class="title-class"
+            label-class="label-class"
+            @click="onCellClick(item)"
+            style="min-width:70%"
+            center
+            is-link
+          />
+          <van-cell
+            v-for="(item,index) in dataList"
+            v-if="item.type == 3"
             :key="item.id"
             :title="(index+1) +'.'+item.title"
             :value="item.feature.hot"
@@ -46,22 +53,10 @@
             center
             is-link
           />
-          <van-cell
-            center
-            v-for="item in dataList"
-            v-if="item.type == 3"
-            :key="item.id"
-            :title="item.title"
-            @click="onCellClick(item)"
-            is-link
-          />
         </van-list>
       </van-tab>
     </van-tabs>
-
-
   </div>
-
 
 </template>
 
